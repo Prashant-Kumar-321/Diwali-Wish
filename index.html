@@ -1,0 +1,194 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Diwali</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+Great+Primer&family=Lobster&family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0c0c0c;
+            color: #fff;
+        }
+        h1{
+            color: orange !important; 
+        }
+
+        .fireworks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            animation: explode 1s ease-out forwards;
+        }
+        @keyframes explode {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(50);
+                opacity: 0;
+            }
+        }
+        .diwali-bg {
+            background: url('./assets/ram.png') no-repeat center center;
+            background-size: contain;
+            animation: backgroundMove 10s infinite alternate;
+        }
+        @keyframes backgroundMove {
+            0% {
+                background-position: center 200px;
+            }
+            50% {
+                background-position: -60px center;
+            }
+            100% {
+                background-position: center 200px;
+            }
+        }
+        @keyframes colorChange {
+            0% { color: rgba(255, 255, 255, 1); }
+            33% { color: rgba(255, 223, 0, 1); }
+            66% { color: rgba(255, 165, 0, 1); }
+            
+            100% { color: rgba(255, 255, 255, 1); }
+        }
+        .color-animation {
+            /* animation: colorChange 3s infinite; */
+        }
+
+        .lamp {
+            position: absolute;
+            width: 50px;
+            height: 100px;
+            background: url('./assets/pngtree-earthen-lamp-png-image_8520590.png') no-repeat center center;
+            background-size: contain;
+        }
+        .flower {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: url('./assets/gulmohar.png') no-repeat center center;
+            background-size: contain;
+            animation: fall 5s linear infinite;
+        }
+        @keyframes fall {
+            0% {
+                top: -10%;
+                opacity: 1;
+            }
+            100% {
+                top: 110%;
+                opacity: 0;
+            }
+        }
+        .cursive-font {
+            font-family: 'Great Vibes', cursive;
+            letter-spacing: 0.1rem;
+        }
+    </style>
+</head>
+<body class="relative overflow-hidden max-h-screen max-w-screen px-4">
+
+    <div id="prompt" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-75 z-20">
+        <div class="text-center text-white">
+            <p class="text-xl mb-4">Enter Your Name Please:</p>
+            <input id="username" type="text" class="p-2 text-black" placeholder="Your Name" onkeydown="if(event.key === 'Enter') showContent()">
+        </div>
+    </div>
+
+    <div id="content" class="min-h-screen flex flex-col items-center justify-center">
+        <h1 id="greeting" class="text-5xl font-bold sm:text-6xl font-great-vibes text-white mb-4 color-animation cursive-font text-center">Happy Diwali</h1>
+        <p class="text-center text-2xl text-white">May Your life be as bright as the Diwali Lights! Wishing you a beautiful and blessed Diwali.</p>
+    </div>
+
+
+    <div class="fireworks"></div>
+    <div class="absolute left-0 top-0 w-full h-full diwali-bg opacity-50 -z-10"></div>
+
+
+    <div class="lamp" style="top: 10px; left: 10px;">
+    </div>
+    <div class="lamp" style="top: 10px; right: 10px;">
+    </div>
+    <div class="lamp" style="bottom: 10px; left: 10px;">
+    </div>
+    <div class="lamp" style="bottom: 10px; right: 10px;">
+    </div>
+
+    <audio id="background-audio" src="new-year-fireworks-24781.mp3"></audio>
+
+    <!-- Author watermark -->
+    <div class="absolute bottom-0 right-4 text-gray-600 opacity-90">Prashant kumar gupta</div>
+
+
+    <script>
+        function createFirework() {
+            const firework = document.createElement('div');
+            firework.classList.add('firework');
+            firework.style.left = Math.random() * 100 + 'vw';
+            firework.style.top = Math.random() * 100 + 'vh';
+            firework.style.background = getRandomColor();
+            document.querySelector('.fireworks').appendChild(firework);
+            setTimeout(() => {
+                firework.remove();
+            }, 1000);
+        }
+
+        function getRandomColor() {
+            const colors = ['rgba(255, 255, 255, 1)', 'rgba(255, 223, 0, 1)', 'rgba(255, 165, 0, 1)'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        setInterval(createFirework, 500);
+
+        function createFlower() {
+            const flower = document.createElement('div');
+            flower.classList.add('flower');
+            flower.style.left = Math.random() * 100 + 'vw';
+            document.body.appendChild(flower);
+            setTimeout(() => {
+                flower.remove();
+            }, 5000);
+        }
+
+        setInterval(createFlower, 300);
+
+        function showContent() {
+            const usernameInput = document.getElementById('username');
+            const username = usernameInput.value.trim(); 
+
+            if (username) {
+                document.getElementById('greeting').innerText = `Happy Diwali, ${username}`;
+                document.getElementById('prompt').style.display = 'none';
+                document.getElementById('content').style.display = 'flex';
+                audioElement = document.getElementById('background-audio');
+                audioElement.autoplay = true;
+                audioElement.loop = true;
+                audioElement.play()
+            }
+            else{
+                usernameInput.value="";
+            }
+        }
+
+    </script>
+</body>
+</html>
